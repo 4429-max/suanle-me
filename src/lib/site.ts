@@ -1,11 +1,18 @@
+const normalizedBasePath = (process.env.NEXT_PUBLIC_BASE_PATH ?? "").replace(/\/$/, "");
+export const basePath = normalizedBasePath === "/" ? "" : normalizedBasePath;
+export const siteAssetPath = (path: string) => `${basePath}${path.startsWith("/") ? path : `/${path}`}`;
+const normalizedSiteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://suanle.me").replace(/\/$/, "");
+export const siteAbsoluteUrl = (path: string) => `${normalizedSiteUrl}${path.startsWith("/") ? path : `/${path}`}`;
+
 export const siteConfig = {
   name: "算了么",
   title: "算了么 - 免费开源东方命理工具箱",
   description:
     "支持紫微斗数、八字排盘、梅花易数、奇门遁甲、六爻、塔罗牌、周公解梦、黄历、每日运势等功能。",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://suanle.me",
+  url: normalizedSiteUrl,
   github: process.env.NEXT_PUBLIC_GITHUB_URL ?? "https://github.com/ssqz2zqp2m-del/suanle-me",
   author: "suanle.me",
+  basePath,
 };
 
 type NavItem = {
